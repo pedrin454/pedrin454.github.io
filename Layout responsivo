@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Responsive Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f6f8fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #24292e;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 10px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            background-color: #0366d6;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .repo {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .repo h2 {
+            font-size: 1.5em;
+            color: #0366d6;
+            margin-bottom: 5px;
+        }
+
+        .repo a {
+            text-decoration: none;
+            color: #0366d6;
+        }
+
+        .repo a:hover {
+            text-decoration: underline;
+        }
+
+        .repo p {
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #24292e;
+            color: white;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .repo {
+                flex-direction: column;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 30px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .navbar a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="#">GitHubClone</a>
+        </div>
+        <div class="links">
+            <a href="#">Home</a>
+            <a href="#">Repositories</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>Welcome to GitHubClone</h1>
+        <p>Your place to discover amazing projects and repositories</p>
+    </div>
+
+    <div class="content">
+        <div class="repo">
+            <h2><a href="#">Repository 1</a></h2>
+            <p>Description of Repository 1. Built using modern technologies.</p>
+        </div>
+        <div class="repo">
+            <h2><a href="#">Repository 2</a></h2>
+            <p>Description of Repository 2. A deep dive into data science.</p>
+        </div>
+        <div class="repo">
+            <h2><a href="#">Repository 3</a></h2>
+            <p>Description of Repository 3. Innovative web solutions with React.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 GitHubClone. All rights reserved.</p>
+    </div>
+</body>
+</html>
