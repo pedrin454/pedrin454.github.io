@@ -1,257 +1,195 @@
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Meu App Responsivo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Meu App Responsivo'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CalculadoraScreen()),
-              ),
-              child: Text('Calculadora'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => JogoDaVelhaScreen()),
-              ),
-              child: Text('Jogo da Velha'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CalculadoraScreen extends StatefulWidget {
-  @override
-  _CalculadoraScreenState createState() => _CalculadoraScreenState();
-}
-
-class _CalculadoraScreenState extends State<CalculadoraScreen> {
-  String input = '';
-
-  void _onButtonPressed(String value) {
-    setState(() {
-      if (value == '=') {
-        try {
-          input = _evaluateExpression(input);
-        } catch (e) {
-          input = 'Erro';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web.Talento_Tech</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            color: #333;
+            text-align: center;
         }
-      } else if (value == 'C') {
-        input = '';
-      } else {
-        input += value;
-      }
-    });
-  }
 
-  String _evaluateExpression(String expression) {
-    try {
-      // Substitui operadores e resolve expressão básica
-      final result = _calculate(expression);
-      return result.toString();
-    } catch (e) {
-      return 'Erro';
-    }
-  }
+        header {
+            background: #004aad;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-  double _calculate(String expression) {
-    // Avalia apenas somas, subtrações, multiplicações e divisões
-    List<String> tokens = expression.split(RegExp(r'(\D)'));
-    List<String> operators = RegExp(r'(\D)').allMatches(expression).map((m) => m.group(0)!).toList();
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
 
-    double result = double.parse(tokens[0]);
-    for (int i = 0; i < operators.length; i++) {
-      double nextValue = double.parse(tokens[i + 1]);
-      switch (operators[i]) {
-        case '+':
-          result += nextValue;
-          break;
-        case '-':
-          result -= nextValue;
-          break;
-        case '*':
-          result *= nextValue;
-          break;
-        case '/':
-          result /= nextValue;
-          break;
-        default:
-          throw FormatException("Operador inválido");
-      }
-    }
-    return result;
-  }
+        main {
+            padding: 2rem;
+        }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Calculadora'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              alignment: Alignment.centerRight,
-              child: Text(
-                input,
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 4,
-              padding: EdgeInsets.all(16),
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              children: [
-                '7', '8', '9', '/',
-                '4', '5', '6', '*',
-                '1', '2', '3', '-',
-                'C', '0', '=', '+'
-              ].map((btn) => ElevatedButton(
-                onPressed: () => _onButtonPressed(btn),
-                child: Text(
-                  btn,
-                  style: TextStyle(fontSize: 24),
-                ),
-              )).toList(),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
+        .section {
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
 
-// Jogo da Velha permanece inalterado
-class JogoDaVelhaScreen extends StatefulWidget {
-  @override
-  _JogoDaVelhaScreenState createState() => _JogoDaVelhaScreenState();
-}
+        .calculator, .tic-tac-toe {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-class _JogoDaVelhaScreenState extends State<JogoDaVelhaScreen> {
-  List<String> board = List.filled(9, '');
-  bool isXNext = true;
+        .calculator input, .calculator button {
+            padding: 0.5rem;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
 
-  void _onTilePressed(int index) {
-    if (board[index].isNotEmpty || _calculateWinner() != null) return;
-    setState(() {
-      board[index] = isXNext ? 'X' : 'O';
-      isXNext = !isXNext;
-    });
-  }
+        .tic-tac-toe-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+            margin: 0 auto;
+        }
 
-  String? _calculateWinner() {
-    const winningLines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
+        .tic-tac-toe-grid button {
+            width: 100px;
+            height: 100px;
+            font-size: 2rem;
+            font-weight: bold;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-    for (var line in winningLines) {
-      final a = line[0];
-      final b = line[1];
-      final c = line[2];
+        footer {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            background: #004aad;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Web.Talento_Tech</h1>
+    </header>
+    <main>
+        <section class="section">
+            <h2>Calculadora</h2>
+            <div class="calculator">
+                <input type="number" id="num1" placeholder="Número 1">
+                <input type="number" id="num2" placeholder="Número 2">
+                <select id="operation">
+                    <option value="add">Somar</option>
+                    <option value="subtract">Subtrair</option>
+                    <option value="multiply">Multiplicar</option>
+                    <option value="divide">Dividir</option>
+                </select>
+                <button onclick="calculate()">Calcular</button>
+                <p id="result">Resultado: </p>
+            </div>
+        </section>
 
-      if (board[a].isNotEmpty &&
-          board[a] == board[b] &&
-          board[a] == board[c]) {
-        return board[a];
-      }
-    }
-    return null;
-  }
+        <section class="section">
+            <h2>Jogo da Velha</h2>
+            <div class="tic-tac-toe">
+                <div class="tic-tac-toe-grid" id="grid">
+                    <button onclick="makeMove(0)"></button>
+                    <button onclick="makeMove(1)"></button>
+                    <button onclick="makeMove(2)"></button>
+                    <button onclick="makeMove(3)"></button>
+                    <button onclick="makeMove(4)"></button>
+                    <button onclick="makeMove(5)"></button>
+                    <button onclick="makeMove(6)"></button>
+                    <button onclick="makeMove(7)"></button>
+                    <button onclick="makeMove(8)"></button>
+                </div>
+                <p id="winner">Vencedor: </p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Web.Talento_Tech</p>
+    </footer>
 
-  @override
-  Widget build(BuildContext context) {
-    final winner = _calculateWinner();
+    <script>
+        // Calculadora
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operation = document.getElementById('operation').value;
+            let result;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Jogo da Velha'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            winner != null
-                ? 'Vencedor: $winner'
-                : 'Próximo jogador: ${isXNext ? 'X' : 'O'}',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
-          GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-            ),
-            itemCount: 9,
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () => _onTilePressed(index),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue[100],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    board[index],
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () => setState(() {
-              board = List.filled(9, '');
-              isXNext = true;
-            }),
-            child: Text('Reiniciar'),
-          ),
-        ],
-      ),
-    );
-  }
-}
+            if (isNaN(num1) || isNaN(num2)) {
+                alert('Por favor, insira números válidos.');
+                return;
+            }
+
+            switch (operation) {
+                case 'add':
+                    result = num1 + num2;
+                    break;
+                case 'subtract':
+                    result = num1 - num2;
+                    break;
+                case 'multiply':
+                    result = num1 * num2;
+                    break;
+                case 'divide':
+                    result = num1 / num2;
+                    break;
+                default:
+                    result = 'Operação inválida';
+            }
+
+            document.getElementById('result').textContent = Resultado: ${result};
+        }
+
+        // Jogo da Velha
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameOver = false;
+
+        function checkWinner() {
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            for (const combo of winningCombinations) {
+                const [a, b, c] = combo;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    return board[a];
+                }
+            }
+
+            return board.includes('') ? null : 'Empate';
+        }
+
+        function makeMove(index) {
+            if (gameOver || board[index]) return;
+
+            board[index] = currentPlayer;
+            document.getElementById('grid').children[index].textContent = currentPlayer;
+
+            const winner = checkWinner();
+            if (winner) {
+                document.getElementById('winner').textContent = winner === 'Empate' ? 'Empate!' : Vencedor: ${winner};
+                gameOver = true;
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+    </script>
+</body>
+</html>
