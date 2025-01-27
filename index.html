@@ -103,15 +103,15 @@
             <h2>Jogo da Velha</h2>
             <div class="tic-tac-toe">
                 <div class="tic-tac-toe-grid" id="grid">
-                    <button onclick="makeMove(0)"></button>
-                    <button onclick="makeMove(1)"></button>
-                    <button onclick="makeMove(2)"></button>
-                    <button onclick="makeMove(3)"></button>
-                    <button onclick="makeMove(4)"></button>
-                    <button onclick="makeMove(5)"></button>
-                    <button onclick="makeMove(6)"></button>
-                    <button onclick="makeMove(7)"></button>
-                    <button onclick="makeMove(8)"></button>
+                    <button onclick="makeMove(0)" id="cell-0"></button>
+                    <button onclick="makeMove(1)" id="cell-1"></button>
+                    <button onclick="makeMove(2)" id="cell-2"></button>
+                    <button onclick="makeMove(3)" id="cell-3"></button>
+                    <button onclick="makeMove(4)" id="cell-4"></button>
+                    <button onclick="makeMove(5)" id="cell-5"></button>
+                    <button onclick="makeMove(6)" id="cell-6"></button>
+                    <button onclick="makeMove(7)" id="cell-7"></button>
+                    <button onclick="makeMove(8)" id="cell-8"></button>
                 </div>
                 <p id="winner">Vencedor: </p>
                 <button onclick="resetGame()">Reiniciar Jogo</button>
@@ -181,7 +181,7 @@
             if (gameOver || board[index]) return;
 
             board[index] = currentPlayer;
-            document.getElementById('grid').children[index].textContent = currentPlayer;
+            document.getElementById(cell-${index}).textContent = currentPlayer;
 
             const winner = checkWinner();
             if (winner) {
@@ -197,9 +197,8 @@
             currentPlayer = 'X';
             gameOver = false;
 
-            const buttons = document.getElementById('grid').children;
-            for (let button of buttons) {
-                button.textContent = '';
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(cell-${i}).textContent = '';
             }
 
             document.getElementById('winner').textContent = 'Vencedor: ';
